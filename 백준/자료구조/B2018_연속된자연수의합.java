@@ -5,24 +5,29 @@ import java.util.Scanner;
 public class B2018_연속된자연수의합 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        int count = 1;
-        int start_index = 1;
-        int end_index = 1;
+        int n = sc.nextInt();
+        int cnt = 1;
+
+        int startIdx = 1;
+        int endIdx = 1;
         int sum = 1;
-        while (end_index != N) {
-            if (sum == N) {         //sum == N ->  End index++;  sum = sum + End index;  count++;
-                count++;
-                end_index++;
-                sum = sum + end_index;
-            } else if (sum > N) {   //sum > N ->  sum = sum - Start index;  Start index++;
-                sum = sum - start_index;
-                start_index++;
-            } else {                //sum < N ->  End index++;  sum = sum + End index;
-                end_index++;
-                sum = sum + end_index;
+
+        while (endIdx != n) {
+            if (sum == n) {
+                cnt++;
+                endIdx++;
+                sum += endIdx;
+
+            } else if (sum > n) {
+                sum -= startIdx;
+                startIdx++;
+
+            } else {
+                endIdx++;
+                sum += endIdx;
             }
         }
-        System.out.println(count);
+
+        System.out.println(cnt);
     }
 }

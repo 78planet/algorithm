@@ -6,89 +6,82 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class B12891_DNA비밀번호 {
-    static int checkArr[];
-    static int myArr[];
+    static int[] checkArr;
+    static int[] myArr;
     static int checkSecret;
+    static int dnaIdNum = 4;
 
-    public static void main(String[] args) throws NumberFormatException, IOException {
+    public static void main(String[] args) throws IOException {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(bf.readLine());
-        int S = Integer.parseInt(st.nextToken());
-        int P = Integer.parseInt(st.nextToken());
-        int Result = 0;
-        char[] A = bf.readLine().toCharArray();
-        checkArr = new int[4];
-        myArr = new int[4];
+        int strNum = Integer.parseInt(st.nextToken());
+        int partialNum = Integer.parseInt(st.nextToken());
+        int result = 0;
+        char[] charArray = bf.readLine().toCharArray();
+
+        checkArr = new int[dnaIdNum];
+        myArr = new int[dnaIdNum];
         checkSecret = 0;
+
         st = new StringTokenizer(bf.readLine());
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < dnaIdNum; i++) {
             checkArr[i] = Integer.parseInt(st.nextToken());
-            if (checkArr[i] == 0)
-                checkSecret++;
+            if (checkArr[i] == 0) checkSecret++;
         }
-        for (int i = 0; i < P; i++) { //초기 P부분 문자열 처리 부분
-            Add(A[i]);
+
+        for (int i = 0; i < partialNum; i++) {
+            add(charArray[i]);
         }
-        if (checkSecret == 4)
-            Result++;
-        // 슬라이딩 윈도우 처리 부분
-        for (int i = P; i < S; i++) {
-            int j = i - P;
-            Add(A[i]);
-            Remove(A[j]);
-            if (checkSecret == 4)  // 4자리 수에 대한 크기가 모두 충족되었을 때는 유효한 비밀번호
-                Result++;
+        if (checkSecret == 4) result++;
+
+        for (int rt = partialNum; rt < strNum; rt++) {
+            int lt = rt - partialNum;
+            add(charArray[rt]);
+            remove(charArray[lt]);
+            if (checkSecret == 4) result++;
         }
-        System.out.println(Result);
+        System.out.println(result);
         bf.close();
     }
 
-    private static void Add(char c) { //새로 들어온 문자를 처리해주는 함수
+    private static void remove(char c) {
         switch (c) {
             case 'A':
-                myArr[0]++;
-                if (myArr[0] == checkArr[0])
-                    checkSecret++;
+                if (myArr[0] == checkArr[0]) checkSecret--;
+                myArr[0]--;
                 break;
             case 'C':
-                myArr[1]++;
-                if (myArr[1] == checkArr[1])
-                    checkSecret++;
+                if (myArr[1] == checkArr[1]) checkSecret--;
+                myArr[1]--;
                 break;
             case 'G':
-                myArr[2]++;
-                if (myArr[2] == checkArr[2])
-                    checkSecret++;
+                if (myArr[2] == checkArr[2]) checkSecret--;
+                myArr[2]--;
                 break;
             case 'T':
-                myArr[3]++;
-                if (myArr[3] == checkArr[3])
-                    checkSecret++;
+                if (myArr[3] == checkArr[3]) checkSecret--;
+                myArr[3]--;
                 break;
         }
     }
 
-    private static void Remove(char c) { //제거되는  문자를 처리해주는 함수
+    private static void add(char c) {
         switch (c) {
             case 'A':
-                if (myArr[0] == checkArr[0])
-                    checkSecret--;
-                myArr[0]--;
+                myArr[0]++;
+                if (myArr[0] == checkArr[0]) checkSecret++;
                 break;
             case 'C':
-                if (myArr[1] == checkArr[1])
-                    checkSecret--;
-                myArr[1]--;
+                myArr[1]++;
+                if (myArr[1] == checkArr[1]) checkSecret++;
                 break;
             case 'G':
-                if (myArr[2] == checkArr[2])
-                    checkSecret--;
-                myArr[2]--;
+                myArr[2]++;
+                if (myArr[2] == checkArr[2]) checkSecret++;
                 break;
             case 'T':
-                if (myArr[3] == checkArr[3])
-                    checkSecret--;
-                myArr[3]--;
+                myArr[3]++;
+                if (myArr[3] == checkArr[3]) checkSecret++;
                 break;
         }
     }

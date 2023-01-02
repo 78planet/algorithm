@@ -9,29 +9,32 @@ import java.util.StringTokenizer;
 public class B1940_주몽 {
     public static void main(String[] args) throws IOException {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(bf.readLine());
-        int M = Integer.parseInt(bf.readLine());
-        int[] A = new int[N];
+        int n = Integer.parseInt(bf.readLine());
+        int exactNum = Integer.parseInt(bf.readLine());
+        int[] arr = new int[n];
+
         StringTokenizer st = new StringTokenizer(bf.readLine());
-        for (int i = 0; i < N; i++) {
-            A[i] = Integer.parseInt(st.nextToken());
+        for (int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
         }
-        Arrays.sort(A);
-        int count = 0;
-        int i = 0;
-        int j = N - 1;
-        while (i < j) {
-            if (A[i] + A[j] < M) {
-                i++;
-            } else if (A[i] + A[j] > M) {
-                j--;
+        Arrays.sort(arr);
+
+        int cnt = 0;
+        int lt = 0;
+        int rt = n-1;
+
+        while (lt < rt) {
+            if (arr[lt] + arr[rt] < exactNum) {
+                lt++;
+            } else if (arr[lt] + arr[rt] > exactNum) {
+                rt--;
             } else {
-                count++;
-                i++;
-                j--;
+                cnt++;
+                rt--;
+                lt++;
             }
         }
-        System.out.println(count);
+        System.out.println(cnt);
         bf.close();
     }
 }

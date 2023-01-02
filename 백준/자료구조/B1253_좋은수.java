@@ -7,39 +7,41 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class B1253_좋은수 {
-    public static void main(String[] args) throws NumberFormatException, IOException {
+    public static void main(String[] args) throws IOException {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(bf.readLine());
-        int Result = 0;
-        long A[] = new long[N];
+        int n = Integer.parseInt(bf.readLine());
+        int result = 0;
+        long arr[] = new long[n];
         StringTokenizer st = new StringTokenizer(bf.readLine());
-        for (int i = 0; i < N; i++) {
-            A[i] = Long.parseLong(st.nextToken());
+        for (int i = 0; i < n; i++) {
+            arr[i] = Long.parseLong(st.nextToken());
         }
-        Arrays.sort(A);
-        for (int k = 0; k < N; k++) {
-            long find = A[k];
-            int i = 0;
-            int j = N - 1;
-            while (i < j) {  // 투포인터 알고리즘
-                if (A[i] + A[j] == find) {
-                    // find는 서로 다른 두 수의 합이여야됨을 체크
-                    if (i != k && j != k) {
-                        Result++;
+        Arrays.sort(arr);
+
+        for (int i = 0; i < n; i++) {
+            long find = arr[i];
+            int lt = 0;
+            int rt = n-1;
+
+            while (lt < rt) {
+                if (arr[lt] + arr[rt] == find) {
+                    if (lt != i && rt != i) {
+                        result++;
                         break;
-                    } else if (i == k) {
-                        i++;
-                    } else if (j == k) {
-                        j--;
+                    } else if (i == lt) {
+                        lt++;
+                    } else if (i == rt) {
+                        rt--;
                     }
-                } else if (A[i] + A[j] < find) {
-                    i++;
+
+                } else if (arr[lt] + arr[rt] < find) {
+                    lt++;
                 } else {
-                    j--;
+                    rt--;
                 }
             }
         }
-        System.out.println(Result);
+        System.out.println(result);
         bf.close();
     }
 }
