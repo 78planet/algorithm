@@ -29,6 +29,9 @@ public class B2343_블루레이 {
             }
             if (sum != 0)
                 count++;
+
+            // count 가 찾아야할 M 보다 값이 크다는 것은 middle 의 수가 작아 count 가 M 보다 커졌다는 것.
+            // middle 의 수를 크게 만들어서 count 의 값을 줄여야 한다.
             if (count > M)
                 start = middle + 1;
             else
